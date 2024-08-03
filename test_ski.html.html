@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на Определение Типа Кожи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .results {
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Тест на Определение Типа Кожи</h1>
+    <div class="question">
+        <p>1. Как выглядит твоя кожа после умывания без использования крема?</p>
+        <label><input type="radio" name="q1" value="a"> Чувствуется стянутость, кожа сухая</label><br>
+        <label><input type="radio" name="q1" value="b"> Кожа выглядит блестящей</label><br>
+        <label><input type="radio" name="q1" value="c"> Нормальная, никаких особенностей</label><br>
+        <label><input type="radio" name="q1" value="d"> Чувствуется легкая стянутость в некоторых местах, а в других кожа блестит</label>
+    </div>
+    <div class="question">
+        <p>2. Как часто у тебя появляются высыпания или покраснения на коже?</p>
+        <label><input type="radio" name="q2" value="a"> Очень редко</label><br>
+        <label><input type="radio" name="q2" value="b"> Часто, особенно в Т-зоне</label><br>
+        <label><input type="radio" name="q2" value="c"> Редко</label><br>
+        <label><input type="radio" name="q2" value="d"> Часто, независимо от зоны</label>
+    </div>
+    <div class="question">
+        <p>3. Как кожа реагирует на новые косметические средства?</p>
+        <label><input type="radio" name="q3" value="a"> Очень чувствительно, часто появляются раздражения</label><br>
+        <label><input type="radio" name="q3" value="b"> Нет особой реакции</label><br>
+        <label><input type="radio" name="q3" value="c"> Иногда возникают раздражения, но не всегда</label><br>
+        <label><input type="radio" name="q3" value="d"> Реакции зависят от средств</label>
+    </div>
+    <div class="question">
+        <p>4. Как кожа выглядит к концу дня?</p>
+        <label><input type="radio" name="q4" value="a"> Чувствуется сухость и стянутость</label><br>
+        <label><input type="radio" name="q4" value="b"> Кожа блестит, особенно в Т-зоне</label><br>
+        <label><input type="radio" name="q4" value="c"> Нормальная</label><br>
+        <label><input type="radio" name="q4" value="d"> Блестящая и сухая в разных зонах</label>
+    </div>
+    <div class="question">
+        <p>5. Как ты оцениваешь свои поры?</p>
+        <label><input type="radio" name="q5" value="a"> Очень мелкие, почти незаметные</label><br>
+        <label><input type="radio" name="q5" value="b"> Увеличенные, особенно в Т-зоне</label><br>
+        <label><input type="radio" name="q5" value="c"> Среднего размера, не вызывают проблем</label><br>
+        <label><input type="radio" name="q5" value="d"> Разные в разных зонах: мелкие на щеках и крупные в Т-зоне</label>
+    </div>
+    <div class="question">
+        <p>6. Как кожа реагирует на солнечные лучи?</p>
+        <label><input type="radio" name="q6" value="a"> Быстро обгорает, становится красной</label><br>
+        <label><input type="radio" name="q6" value="b"> Легко загарает, но иногда появляются прыщи</label><br>
+        <label><input type="radio" name="q6" value="c"> Загарает равномерно</label><br>
+        <label><input type="radio" name="q6" value="d"> Реакция разная: может обгореть или загореть в разных зонах</label>
+    </div>
+    <button onclick="calculateResult()">Узнать результат</button>
+    <div class="results">
+        <h2>Результат</h2>
+        <p id="result-text"></p>
+    </div>
+</div>
+
+<script>
+    function calculateResult() {
+        const answers = {
+            a: 0,
+            b: 0,
+            c: 0,
+            d: 0
+        };
+
+        const questions = document.querySelectorAll('.question');
+        questions.forEach(question => {
+            const selected = question.querySelector('input[type="radio"]:checked');
+            if (selected) {
+                answers[selected.value]++;
+            }
+        });
+
+        let resultText = '';
+
+        if (answers.a > answers.b && answers.a > answers.c && answers.a > answers.d) {
+            resultText = 'Ваш тип кожи: Сухая кожа.';
+        } else if (answers.b > answers.a && answers.b > answers.c && answers.b > answers.d) {
+            resultText = 'Ваш тип кожи: Жирная кожа.';
+        } else if (answers.c > answers.a && answers.c > answers.b && answers.c > answers.d) {
+            resultText = 'Ваш тип кожи: Нормальная кожа.';
+        } else if (answers.d > answers.a && answers.d > answers.b && answers.d > answers.c) {
+            resultText = 'Ваш тип кожи: Комбинированная кожа.';
+        } else {
+            resultText = 'Ваш тип кожи не определен. Пожалуйста, попробуйте снова.';
+        }
+
+        document.getElementById('result-text').textContent = resultText;
+        document.querySelector('.results').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
